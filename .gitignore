@@ -4,7 +4,6 @@
 .project
 # Generated configuration
 .env.values
-docker-compose.yml
 
 # LANGUAGES
 # Java
@@ -38,7 +37,6 @@ docker-compose.yml
 
 # BUILD
 # Ignore all files in ./build/ folder
-/build/**
 # Except .template
 !/build/**/*.template
 # Except README.md
