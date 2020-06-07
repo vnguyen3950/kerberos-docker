@@ -33,3 +33,48 @@ services:
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity 
     
+  machine-example-com:
+    build: 
+      context: ../build
+      dockerfile: ./krb5-ubuntu/machine/Dockerfile
+    image: krb5-machine-example-com
+    container_name: krb5-machine-example-com
+    hostname: krb5-machine-example-com
+    domainname: example.com
+    #networks:
+    #  example.com:
+    #    ipv4_address: 10.5.0.1
+
+    volumes:
+      - /workspace:/root/share
+
+  kdc-server-example-com:
+    build: 
+      context: ../build
+      dockerfile: ./krb5-ubuntu/kdc-server/Dockerfile
+    image: krb5-kdc-server-example-com
+    container_name: krb5-kdc-server-example-com
+    hostname: krb5-kdc-server-example-com
+    domainname: example.com
+    #networks:
+    #  example.com:
+    #    ipv4_address: 10.5.0.2
+
+    volumes:
+      - /workspace:/root/share
+
+  service-example-com:
+    build: 
+      context: ../build
+      dockerfile: ./krb5-ubuntu/service/Dockerfile
+    image: krb5-service-example-com
+    container_name: krb5-service-example-com
+    hostname: krb5-service-example-com
+    domainname: example.com
+    #networks:
+    #  example.com:
+    #    ipv4_address: 10.5.0.3
+
+    volumes:
+      - /workspace:/root/share
+  
