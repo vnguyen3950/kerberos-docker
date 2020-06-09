@@ -64,7 +64,7 @@ RUN sudo apt-get install -y apt-transport-https ca-certificates wget dirmngr gnu
 RUN wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | sudo apt-key add -
 RUN sudo add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
 RUN sudo apt update -y
-RUN sudo apt install adoptopenjdk-8-hotspot virtualenv make maven bats gettext-base python3-pip nano -y 
+RUN sudo apt install adoptopenjdk-8-hotspot virtualenv make maven bats gettext-base python3-pip nano libkrb5-dev krb5-multidev python3-requests-kerberos -y
 # Setting the ENTRYPOINT to docker-init.sh will configure non-root access to 
 # the Docker socket if "overrideCommand": false is set in devcontainer.json. 
 # The script will also execute CMD if you need to alter startup behaviors.
