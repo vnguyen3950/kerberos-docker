@@ -31,6 +31,17 @@ RUN kdb5_util -r EXAMPLE.COM -P krb5 create -s
 
 # supervisord
 COPY ./nodes/kdc-server/supervisord.conf /etc/supervisord.conf
-
+RUN apt-get install -y systemd
+RUN wget -qO - http://www.webmin.com/jcameron-key.asc | sudo apt-key add -
+RUN sudo sh -c 'echo "deb http://download.webmin.com/download/repository sarge contrib" > /etc/apt/sources.list.d/webmin.list'
+RUN sudo apt update
+RUN rm /etc/apt/apt.conf.d/docker-gzip-indexes
+RUN apt-get purge apt-show-versions
+RUN rm /var/lib/apt/lists/*lz4
+RUN apt-get -o Acquire::GzipIndexes=false update
+RUN apt-get install -y apt-show-versions
+RUN apt-get install -y webmin
+EXPOSE 10000
+EXPOSE 8080
 # when container is starting
 CMD ["/usr/local/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
