@@ -1,5 +1,4 @@
 #!/bin/bash
-/etc/init.d/webmin restart
 cat << EOF  | kadmin.local
 add_principal -pw alice alice/admin@EXAMPLE.COM
 add_principal -pw bob bob
