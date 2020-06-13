@@ -15,6 +15,8 @@ RUN rm -r /etc/krb5kdc/
 
 # python web server configuration
 COPY ./nodes/kdc-server/index.html .
+COPY ./services/krb5/server/server.sh .
+COPY ./services/krb5/server/kerbeross.py .
 
 # kerberos server configuration
 ENV KRB5_CONFIG=/etc/krb5.conf
@@ -32,16 +34,15 @@ RUN kdb5_util -r EXAMPLE.COM -P krb5 create -s
 # supervisord
 COPY ./nodes/kdc-server/supervisord.conf /etc/supervisord.conf
 RUN apt-get install -y systemd
-RUN wget -qO - http://www.webmin.com/jcameron-key.asc | sudo apt-key add -
-RUN sudo sh -c 'echo "deb http://download.webmin.com/download/repository sarge contrib" > /etc/apt/sources.list.d/webmin.list'
-RUN sudo apt update
-RUN rm /etc/apt/apt.conf.d/docker-gzip-indexes
-RUN apt-get purge apt-show-versions
-RUN rm /var/lib/apt/lists/*lz4
-RUN apt-get -o Acquire::GzipIndexes=false update
-RUN apt-get install -y apt-show-versions
-RUN apt-get install -y webmin
+#RUN wget -qO - http://www.webmin.com/jcameron-key.asc | sudo apt-key add -
+#RUN sudo sh -c 'echo "deb http://download.webmin.com/download/repository sarge contrib" > /etc/apt/sources.list.d/webmin.list'
+#RUN sudo apt update
+#RUN rm /etc/apt/apt.conf.d/docker-gzip-indexes
+#RUN apt-get purge apt-show-versions
+#RUN rm /var/lib/apt/lists/*lz4
+#RUN apt-get -o Acquire::GzipIndexes=false update
+#RUN apt-get install -y apt-show-versions webmin
+RUN apt-get install -y python3 libkrb5-dev krb5-multidev python3-requests-kerberos
 EXPOSE 10000
-EXPOSE 8080
 # when container is starting
 CMD ["/usr/local/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
